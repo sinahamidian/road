@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 
 #QT LIBS
 
-find_package(Qt4 COMPONENTS QTCORE QTGUI QTOPENGL)
+find_package(Qt4 COMPONENTS QTCORE QTGUI QTOPENGL QtOpenGL)
 
 find_package(OpenGL)
 #find_package(QtOpenGL)

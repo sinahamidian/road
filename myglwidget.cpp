@@ -1,7 +1,4 @@
 #include "myglwidget.h"
-#include <iostream>
-
-using namespace std;
 
 
 MyGLWidget::MyGLWidget(QWidget *parent)
