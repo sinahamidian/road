@@ -15,11 +15,13 @@ class MainWindow : public QMainWindow
 public:
     void createRoad();
     explicit MainWindow(QWidget *parent = 0);
+
     ~MainWindow();
     GLfloat roadWidth;
     int numberOfLines;
     GLfloat x,z,t,p,e;
 
+    void keyPressEvent(QKeyEvent *key);
 
 private slots:
     void on_horizontalSlider_valueChanged(int value);
@@ -32,9 +34,18 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_openfile_clicked();
+
+    void on_savefile_clicked();
+
+
+
+
 private:
     MyGLWidget *glwidget;
     Ui::MainWindow *ui;
+    QFileDialog of;
+
 };
 
 #endif // MAINWINDOW_H

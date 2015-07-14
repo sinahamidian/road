@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
-    <height>591</height>
+    <width>629</width>
+    <height>457</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,10 +29,10 @@
     <widget class="QSlider" name="horizontalSlider">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>10</x>
        <y>30</y>
        <width>281</width>
-       <height>19</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="orientation">
@@ -42,10 +42,10 @@
     <widget class="QSlider" name="horizontalSlider_3">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>10</x>
        <y>70</y>
        <width>281</width>
-       <height>19</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="orientation">
@@ -55,7 +55,7 @@
     <widget class="QLabel" name="label_17">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>300</x>
        <y>30</y>
        <width>20</width>
        <height>20</height>
@@ -68,7 +68,7 @@
     <widget class="QLabel" name="label_18">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>300</x>
        <y>70</y>
        <width>20</width>
        <height>20</height>
@@ -81,7 +81,7 @@
     <widget class="QLabel" name="label_19">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>300</x>
        <y>110</y>
        <width>20</width>
        <height>20</height>
@@ -91,56 +91,47 @@
       <string>Z</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>46</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>46</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>110</y>
-       <width>46</width>
-       <height>13</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
     <widget class="QSlider" name="horizontalSlider_2">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>10</x>
        <y>110</y>
        <width>281</width>
-       <height>19</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="x">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>30</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="y">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>70</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="z">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>110</y>
+       <width>31</width>
+       <height>21</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -150,7 +141,7 @@
       <x>10</x>
       <y>250</y>
       <width>361</width>
-      <height>121</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
@@ -212,7 +203,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>سایز سنسور  Sx</string>
+      <string>سایز پیکسل Sx</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_8">
@@ -238,7 +229,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>سایز سنسور  Sy</string>
+      <string>سایز پیکسل Sy </string>
      </property>
     </widget>
     <widget class="QLineEdit" name="Sy">
@@ -320,7 +311,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>mm</string>
+      <string>px</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_50">
@@ -333,7 +324,66 @@
       </rect>
      </property>
      <property name="text">
-      <string>mm</string>
+      <string>px</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_28">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>120</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>اندازه تصویر</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="imxx">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>120</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="imyy">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>120</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_45">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>120</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>طول</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_46">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>120</y>
+       <width>31</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>عرض</string>
      </property>
     </widget>
    </widget>
@@ -347,7 +397,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>جایگاه دوربین</string>
+     <string>جایگاه جاده نسبت به دوربین</string>
     </property>
     <widget class="QLineEdit" name="zm">
      <property name="geometry">
@@ -458,141 +508,13 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="p11">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>380</y>
-      <width>361</width>
-      <height>111</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>اعوجاج</string>
-    </property>
-    <widget class="QLineEdit" name="p1">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>51</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_28">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>20</y>
-       <width>41</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>P1</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_29">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>50</y>
-       <width>41</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>P2</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="p2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>51</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="k2">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>50</y>
-       <width>51</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_51">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>20</y>
-       <width>31</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>K1</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="k1">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>20</y>
-       <width>51</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="k3">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>80</y>
-       <width>51</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_52">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>50</y>
-       <width>31</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>K2</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_53">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>80</y>
-       <width>31</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>K3</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>500</y>
-      <width>131</width>
-      <height>31</height>
+      <x>410</x>
+      <y>110</y>
+      <width>81</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -602,8 +524,8 @@
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>180</y>
+      <x>380</x>
+      <y>130</y>
       <width>241</width>
       <height>191</height>
      </rect>
@@ -730,8 +652,8 @@
    <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>80</y>
+      <x>380</x>
+      <y>0</y>
       <width>241</width>
       <height>101</height>
      </rect>
@@ -789,15 +711,120 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>390</y>
-      <width>75</width>
-      <height>23</height>
+      <x>520</x>
+      <y>110</y>
+      <width>71</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>بساز</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_6">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>320</y>
+      <width>241</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>مستطیل روی جاده</string>
+    </property>
+    <widget class="QLabel" name="label_26">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>20</y>
+       <width>16</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>x</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_27">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>16</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>z</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_29">
+     <property name="geometry">
+      <rect>
+       <x>215</x>
+       <y>50</y>
+       <width>21</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>طول</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_30">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>50</y>
+       <width>21</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>پهنا</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="recx">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>20</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="rect">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>50</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="recz">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="recp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>81</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -805,10 +832,18 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>639</width>
+     <width>629</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>فایل</string>
+    </property>
+    <addaction name="openfile"/>
+    <addaction name="savefile"/>
+   </widget>
+   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -819,6 +854,16 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="openfile">
+   <property name="text">
+    <string>بازکردن</string>
+   </property>
+  </action>
+  <action name="savefile">
+   <property name="text">
+    <string>ذخیره کردن</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
