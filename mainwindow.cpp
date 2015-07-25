@@ -9,9 +9,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+<<<<<<< HEAD
     ui->verticalSlider->setRange(-180,180);
     ui->verticalSlider_3->setRange(-180,180);
     ui->verticalSlider_2->setRange(-180,180);
+=======
+    ui->horizontalSlider->setRange(-180,180);
+    ui->horizontalSlider_3->setRange(-180,180);
+    ui->horizontalSlider_2->setRange(-180,180);
+>>>>>>> origin/master
 
     connect(ui->openfile, SIGNAL(triggered()), this, SLOT(on_openfile_clicked()));
     connect(ui->savefile, SIGNAL(triggered()), this, SLOT(on_savefile_clicked()));
@@ -108,8 +114,13 @@ void MainWindow::on_pushButton_clicked()
     glwidget->h = ui->imyy->text().toInt();
     glwidget->resizeaa(glwidget->h,glwidget->w);
 
+<<<<<<< HEAD
     //QSize a(glwidget->w,glwidget->h);
     QSize a(glwidget->currentW,glwidget->currentH);
+=======
+    QSize a(glwidget->w,glwidget->h);
+
+>>>>>>> origin/master
     glwidget->resize(a);
 
     glwidget->camx=ui->xm->text().toFloat();
@@ -131,14 +142,21 @@ void MainWindow::on_pushButton_clicked()
 
     glwidget->makeTheRec();
 
+<<<<<<< HEAD
     ui->verticalSlider->setValue(glwidget->rotX);
     ui->verticalSlider_3->setValue(glwidget->rotY);
     ui->verticalSlider_2->setValue(glwidget->rotZ);
+=======
+    ui->horizontalSlider->setValue(glwidget->rotX);
+    ui->horizontalSlider_3->setValue(glwidget->rotY);
+    ui->horizontalSlider_2->setValue(glwidget->rotZ);
+>>>>>>> origin/master
 
     glwidget->camalpha = -((float)3.14159265/180)*glwidget->rotX;
     glwidget->cambeta = ((float)3.14159265/180)*glwidget->rotY;
     glwidget->camteta = ((float)3.14159265/180)*glwidget->rotZ;
 
+<<<<<<< HEAD
 
 
     x = ui->lineEdit_3->text().toFloat();
@@ -163,6 +181,32 @@ void MainWindow::on_pushButton_clicked()
     ui->lineEdit_6->setText(QString::number(p));
     ui->lineEdit_7->setText(QString::number(e));
 
+=======
+
+
+    x = ui->lineEdit_3->text().toFloat();
+    z = ui->lineEdit_4->text().toFloat();
+    t = ui->lineEdit_5->text().toFloat();
+    p = ui->lineEdit_6->text().toFloat();
+    e = ui->lineEdit_7->text().toFloat();
+
+    glwidget->t = t;
+    glwidget->p = p;
+    glwidget->e = e;
+    glwidget->xx = x;
+    glwidget->zz = z;
+
+    glwidget->makeTheCar();
+    glwidget->makeThePLK();
+    glwidget->makeConDOTS();
+
+    ui->lineEdit_3->setText(QString::number(x));
+    ui->lineEdit_4->setText(QString::number(z));
+    ui->lineEdit_5->setText(QString::number(t));
+    ui->lineEdit_6->setText(QString::number(p));
+    ui->lineEdit_7->setText(QString::number(e));
+
+>>>>>>> origin/master
     ui->recp->setText(QString::number(glwidget->recp));
     ui->rect->setText(QString::number(glwidget->rect));
     ui->recx->setText(QString::number(glwidget->recx));

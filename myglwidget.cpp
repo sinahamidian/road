@@ -2,12 +2,15 @@
 #include <iostream>
 using namespace std;
 
+<<<<<<< HEAD
 GLfloat abss(GLfloat a){
     if (a>=0)
         a;
     else
         a*-1;
 }
+=======
+>>>>>>> origin/master
 
 MyGLWidget::MyGLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
@@ -308,6 +311,7 @@ void MyGLWidget::paintGL(){
     glVertex3f(-(imdots[1816+numberOfLines*2+3].x/w)*2, -(imdots[1816+numberOfLines*2+3].y/h)*2, 0);
     glEnd();
 
+<<<<<<< HEAD
 //    glColor3f(0.0f,0.0f,0.0f);
 //    int sum =0;
 //    for(int i=0; i<conObjSize; i++)
@@ -329,6 +333,32 @@ void MyGLWidget::paintGL(){
 }
 
 void MyGLWidget::resizeaa(int height, int width){
+=======
+    glColor3f(0.0f,0.0f,0.0f);
+    int sum =0;
+    for(int i=0; i<conObjSize; i++)
+    {
+
+        glBegin(GL_POLYGON);
+        glVertex3f(-(imdots[1820+numberOfLines*2+sum].x/w)*2, -(imdots[1820+numberOfLines*2+sum].y/h)*2, 0);
+        glVertex3f(-(imdots[1820+numberOfLines*2+sum+contourSizes[i] -1].x/w)*2, -(imdots[1820+numberOfLines*2+sum+contourSizes[i] -1].y/h)*2, 0);
+        for(int j=0; j<contourSizes[i]-1; j++){
+            glVertex3f(-(imdots[1820+numberOfLines*2+sum+j].x/w)*2, -(imdots[1820+numberOfLines*2+sum+j].y/h)*2, 0);
+            glVertex3f(-(imdots[1820+numberOfLines*2+sum+j+1].x/w)*2, -(imdots[1820+numberOfLines*2+sum+j+1].y/h)*2, 0);
+        }
+        sum+= contourSizes[i];
+        glEnd();
+    }
+
+
+}
+
+void MyGLWidget::resizeaa(int h, int w){
+    resizeGL(w,h);
+}
+
+void MyGLWidget::resizeGL(int width, int height){
+>>>>>>> origin/master
     w = width;
     h = height;
     if(((float)w/h)> ((float)ww/hh))
@@ -636,6 +666,7 @@ void MyGLWidget::makeConDOTS(){
         sum+= contourSizes[i];
     }
 }
+<<<<<<< HEAD
 
 void MyGLWidget::triangulation()
 {
@@ -801,3 +832,5 @@ bool MyGLWidget::closeVertices(DOT* a, DOT* b, DOT* c){
 }
     return 0;
 }
+=======
+>>>>>>> origin/master

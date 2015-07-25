@@ -3,8 +3,13 @@
 
 #include <QtOpenGL/QtOpenGL>
 #include <GL/glu.h>
+<<<<<<< HEAD
 #include <vector>
 using namespace std;
+=======
+
+
+>>>>>>> origin/master
 
 struct DOT{
     GLfloat x,y,z;
@@ -30,6 +35,7 @@ public:
      void makeThePLK();
      void makeTheContours();
      void makeConDOTS();
+<<<<<<< HEAD
      void resizeaa(int height, int width);
      void triangulation();
      bool convex(double x1, double y1, double x2, double y2,
@@ -40,6 +46,9 @@ public:
      bool PointsInTriangles (int ptIndex, vector <DOT*> * points);
      bool closeVertices(DOT* a, DOT* b, DOT* c);
      vector <DOT*> temp1;
+=======
+     void resizeaa(int h, int w);
+>>>>>>> origin/master
 
 
      QVector3D xAxis, yAxis, zAxis;
