@@ -271,6 +271,8 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
+    if(started == 0)
+        return;
     if( (event->key() == Qt::Key_Enter) || (event->key() == Qt::Key_Return))
             on_pushButton_clicked();    
 }
