@@ -1,32 +1,42 @@
 #include "myglwidget.h"
 #include <iostream>
+#include <mainwindow.h>
+#include "ui_mainwindow.h"
+
 using namespace std;
 
-<<<<<<< HEAD
 GLfloat abss(GLfloat a){
     if (a>=0)
-        a;
+        return a;
     else
-        a*-1;
+        return a*-1;
 }
-=======
->>>>>>> origin/master
 
 MyGLWidget::MyGLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
-    QSize a(640,512);
+    QSize a(1280,1024);
 
     this->resize(a);
 //    glViewport(0,0,12,h);
     w = this->width();
     h = this->height();
     rotX = rotZ = rotY = 0;
+
 }
 
-MyGLWidget::MyGLWidget(int nl, GLfloat rw,GLfloat x1, GLfloat x2, GLfloat x3, GLfloat x4 , GLfloat x5){
-    w = 640;
-    h = 512;
+MyGLWidget::MyGLWidget(int nl, GLfloat rw,GLfloat x1, GLfloat x2, GLfloat x3, GLfloat x4 , GLfloat x5, GLfloat rX, GLfloat rY){
+
+    rotX = 0;
+    rotZ = rotY = 0;
+    camy = 10;
+
+    MinMaxFlag = 0;
+    roadX = rX;
+    roadY = rY;
+
+    w = 1280;
+    h = 1024;
     QSize a(w,h);
 
     this->resize(a);
@@ -57,9 +67,8 @@ MyGLWidget::MyGLWidget(int nl, GLfloat rw,GLfloat x1, GLfloat x2, GLfloat x3, GL
     pe = 0.4;
     pw = 0.5;
     ph = 0.15;
-}
 
-void MyGLWidget::initializeGL(){
+    //initializeGL
 
     rect = 1;
     recp = 1;
@@ -77,27 +86,27 @@ void MyGLWidget::initializeGL(){
 
 
         dots[1800].z = 200;
-        dots[1800].x = -roadWidth/2;
-        dots[1800].y = 0;
+        dots[1800].x = roadX + -roadWidth/2;
+        dots[1800].y = roadY;
         dots[1801].z = -200;//
-        dots[1801].x = -roadWidth/2;
-        dots[1801].y = 0;
+        dots[1801].x = roadX + -roadWidth/2;
+        dots[1801].y = roadY;
         dots[1802].z = 200;
-        dots[1802].x = roadWidth/2;
-        dots[1802].y = 0;
+        dots[1802].x = roadX + roadWidth/2;
+        dots[1802].y = roadY;
         dots[1803].z = -200;//
-        dots[1803].x = roadWidth/2;
-        dots[1803].y = 0;
+        dots[1803].x = roadX + roadWidth/2;
+        dots[1803].y = roadY;
 
         GLfloat lineWidth = roadWidth/numberOfLines;
         for(int i=0; i<numberOfLines-1; i++)
         {
             dots[1804+i*2].z = 200;
-            dots[1804+i*2].x = -roadWidth/2 + lineWidth*(i+1);
-            dots[1804+i*2].y = 0;
+            dots[1804+i*2].x = roadX -roadWidth/2 + lineWidth*(i+1);
+            dots[1804+i*2].y = roadY;
             dots[1805+i*2].z = -200;//
-            dots[1805+i*2].x = -roadWidth/2 + lineWidth*(i+1);
-            dots[1805+i*2].y = 0;
+            dots[1805+i*2].x = roadX -roadWidth/2 + lineWidth*(i+1);
+            dots[1805+i*2].y = roadY;
 
         }
 
@@ -133,17 +142,21 @@ void MyGLWidget::initializeGL(){
 
 
 
-    F=0.1 * 1000; sx=(0.001)/(0.001); sy=0.001/0.001; cx=0; cy=0;
+    F=10; sx=5; sy=5; cx=0; cy=0;
     k1 = 0; k2 = 0; k3 = 0;
     p1 = 0; p2 = 0;
 
-    camx = 0; camy = -10; camz = 0;
+    camx = 0; camy = 10; camz = 0;
     camalpha = 0; cambeta = 0; camteta = 0 ;
 
     camTrans();
 
     Intrinsics();
 //    Distortion();
+}
+
+void MyGLWidget::initializeGL(){
+
 
 }
 
@@ -179,8 +192,8 @@ void MyGLWidget::Intrinsics(){
         }
 
 
-        imdots[i].x = ((F*sx*dots0[i].x)/(dots0[i].z))+cx;
-        imdots[i].y = ((F*sy*dots0[i].y)/(dots0[i].z))+cy;
+        imdots[i].x = ((F*((float)1/sx)*1000*dots0[i].x)/(dots0[i].z))+cx;
+        imdots[i].y = ((F*((float)1/sy)*1000*dots0[i].y)/(dots0[i].z))+cy;
         imdots[i].z = dots0[i].z;
 
     }
@@ -203,7 +216,8 @@ void MyGLWidget::Distortion(){
 
 void MyGLWidget::paintGL(){
 
-
+    GLfloat fSizes[2];      // Line width range metrics
+      GLfloat fCurrSize;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -220,6 +234,12 @@ void MyGLWidget::paintGL(){
 //    fCurrSize = fSizes[0];
 //    fCurrSize += 2.0f;
 //    glLineWidth(fCurrSize);
+
+    glGetFloatv(GL_LINE_WIDTH_RANGE,fSizes);
+      fCurrSize = fSizes[0];
+
+    glLineWidth(fCurrSize);
+
     glBegin(GL_LINES);
 
     glColor3f(0.0f,1.0f,0.0f);
@@ -241,7 +261,7 @@ void MyGLWidget::paintGL(){
     glEnd();
     glBegin(GL_QUADS);
 
-    if(-camx<(xx+(p/2))){
+    if(camx  <(xx+(p/2))){
         glColor3f(1.0f,1.0f,0.0f);
 
         glVertex3f(-(imdots[1804+numberOfLines*2].x/w)*2, -(imdots[1804+numberOfLines*2].y/h)*2, 0);
@@ -288,6 +308,8 @@ void MyGLWidget::paintGL(){
 
     glEnd();
 
+  glLineWidth(3);
+
     glBegin(GL_LINES);//mostatil
     glColor3f(0.3f,0.7f,0.6f);
     glVertex3f(-(imdots[1804+numberOfLines*2+8].x/w)*2, -(imdots[1804+numberOfLines*2+8].y/h)*2, 0);
@@ -301,7 +323,18 @@ void MyGLWidget::paintGL(){
 
     glVertex3f(-(imdots[1804+numberOfLines*2+11].x/w)*2, -(imdots[1804+numberOfLines*2+11].y/h)*2, 0);
     glVertex3f(-(imdots[1804+numberOfLines*2+8].x/w)*2, -(imdots[1804+numberOfLines*2+8].y/h)*2, 0);
+
+    glVertex3f(-(imdots[1804+numberOfLines*2+11].x/w)*2, -(imdots[1804+numberOfLines*2+11].y/h)*2, 0);
+    glVertex3f(-(imdots[1804+numberOfLines*2+9].x/w)*2, -(imdots[1804+numberOfLines*2+9].y/h)*2, 0);
+
+    glVertex3f(-(imdots[1804+numberOfLines*2+8].x/w)*2, -(imdots[1804+numberOfLines*2+8].y/h)*2, 0);
+    glVertex3f(-(imdots[1804+numberOfLines*2+10].x/w)*2, -(imdots[1804+numberOfLines*2+10].y/h)*2, 0);
+
     glEnd();
+
+
+
+  glLineWidth(1);
 
     glBegin(GL_QUADS);;//pelak
     glColor3f(1.0f,1.0f,1.0f);
@@ -311,9 +344,8 @@ void MyGLWidget::paintGL(){
     glVertex3f(-(imdots[1816+numberOfLines*2+3].x/w)*2, -(imdots[1816+numberOfLines*2+3].y/h)*2, 0);
     glEnd();
 
-<<<<<<< HEAD
-//    glColor3f(0.0f,0.0f,0.0f);
-//    int sum =0;
+    glColor3f(0.0f,0.0f,0.0f);
+    int sum =0;
 //    for(int i=0; i<conObjSize; i++)
 //    {
 
@@ -333,46 +365,20 @@ void MyGLWidget::paintGL(){
 }
 
 void MyGLWidget::resizeaa(int height, int width){
-=======
-    glColor3f(0.0f,0.0f,0.0f);
-    int sum =0;
-    for(int i=0; i<conObjSize; i++)
-    {
-
-        glBegin(GL_POLYGON);
-        glVertex3f(-(imdots[1820+numberOfLines*2+sum].x/w)*2, -(imdots[1820+numberOfLines*2+sum].y/h)*2, 0);
-        glVertex3f(-(imdots[1820+numberOfLines*2+sum+contourSizes[i] -1].x/w)*2, -(imdots[1820+numberOfLines*2+sum+contourSizes[i] -1].y/h)*2, 0);
-        for(int j=0; j<contourSizes[i]-1; j++){
-            glVertex3f(-(imdots[1820+numberOfLines*2+sum+j].x/w)*2, -(imdots[1820+numberOfLines*2+sum+j].y/h)*2, 0);
-            glVertex3f(-(imdots[1820+numberOfLines*2+sum+j+1].x/w)*2, -(imdots[1820+numberOfLines*2+sum+j+1].y/h)*2, 0);
-        }
-        sum+= contourSizes[i];
-        glEnd();
-    }
-
-
-}
-
-void MyGLWidget::resizeaa(int h, int w){
-    resizeGL(w,h);
-}
-
-void MyGLWidget::resizeGL(int width, int height){
->>>>>>> origin/master
     w = width;
     h = height;
     if(((float)w/h)> ((float)ww/hh))
     {
-        currentW = 1061;
-        currentH = ((float)h/w)*1061;
+        currentW = ww;
+        currentH = ((float)h/w)*ww;
     }
     else
     {
-        currentH = 631;
-        currentW = ((float)w/h)*631;
+        currentH = hh;
+        currentW = ((float)w/h)*hh;
     }
 
-    resizeGL(currentW,currentH);
+    //resizeGL(currentW,currentH);
 }
 
 void MyGLWidget::resizeGL(int width, int height){
@@ -428,9 +434,9 @@ void MyGLWidget::camTrans(){
 
     for(int i=0; i<dotsSize; i++)
     {
-        dots0[i].x = dots[i].x + camx;
-        dots0[i].y = dots[i].y + camy;
-        dots0[i].z = dots[i].z + camz;
+        dots0[i].x = dots[i].x - camx;
+        dots0[i].y = dots[i].y - camy;
+        dots0[i].z = dots[i].z - camz;
 
 
 //        dots0[i].x = x*cost*cosb + (sint*cosa - sina*cost*sinb)*y + (sina*sint + cost*cosa*sinb)*z;
@@ -460,89 +466,90 @@ void MyGLWidget::clear(){
 }
 
 void MyGLWidget::makeTheCar(){
-    dots[1804+numberOfLines*2].x = xx-camx;
+    dots[1804+numberOfLines*2].x = xx;
     dots[1804+numberOfLines*2].y = 0;
-    dots[1804+numberOfLines*2].z = -zz+camz;
+    dots[1804+numberOfLines*2].z = -zz;
 
-    dots[1804+numberOfLines*2+1].x = xx+p-camx;
+    dots[1804+numberOfLines*2+1].x = xx+p;
     dots[1804+numberOfLines*2+1].y = 0;
-    dots[1804+numberOfLines*2+1].z = -zz+camz;
+    dots[1804+numberOfLines*2+1].z = -zz;
 
-    dots[1804+numberOfLines*2+2].x = xx+p-camx;
+    dots[1804+numberOfLines*2+2].x = xx+p;
     dots[1804+numberOfLines*2+2].y = 0+e;
-    dots[1804+numberOfLines*2+2].z = -zz+camz;
+    dots[1804+numberOfLines*2+2].z = -zz;
 
-    dots[1804+numberOfLines*2+3].x = xx-camx;
+    dots[1804+numberOfLines*2+3].x = xx;
     dots[1804+numberOfLines*2+3].y = 0+e;
-    dots[1804+numberOfLines*2+3].z = -zz+camz;
+    dots[1804+numberOfLines*2+3].z = -zz;
 
-    dots[1804+numberOfLines*2+4].x = xx-camx;
+    dots[1804+numberOfLines*2+4].x = xx;
     dots[1804+numberOfLines*2+4].y = 0;
-    dots[1804+numberOfLines*2+4].z = -zz-t+camz;
+    dots[1804+numberOfLines*2+4].z = -zz-t;
 
-    dots[1804+numberOfLines*2+5].x = xx+p-camx;
+    dots[1804+numberOfLines*2+5].x = xx+p;
     dots[1804+numberOfLines*2+5].y = 0;
-    dots[1804+numberOfLines*2+5].z = -zz-t+camz;
+    dots[1804+numberOfLines*2+5].z = -zz-t;
 
-    dots[1804+numberOfLines*2+6].x = xx+p-camx;
+    dots[1804+numberOfLines*2+6].x = xx+p;
     dots[1804+numberOfLines*2+6].y = 0+e;
-    dots[1804+numberOfLines*2+6].z = -zz-t+camz;
+    dots[1804+numberOfLines*2+6].z = -zz-t;
 
-    dots[1804+numberOfLines*2+7].x = xx-camx;
+    dots[1804+numberOfLines*2+7].x = xx;
     dots[1804+numberOfLines*2+7].y = 0+e;
-    dots[1804+numberOfLines*2+7].z = -zz-t+camz;
+    dots[1804+numberOfLines*2+7].z = -zz-t;
 
 }
 
 void MyGLWidget::makeTheRec(){
-    dots[1804+numberOfLines*2 +8].x = recx-camx;
+    dots[1804+numberOfLines*2 +8].x = recx;
     dots[1804+numberOfLines*2 +8].y = 0;
-    dots[1804+numberOfLines*2 +8].z = -recz+camz;
+    dots[1804+numberOfLines*2 +8].z = -recz;
 
-    dots[1804+numberOfLines*2 +9].x = recx-camx + recp;
+    dots[1804+numberOfLines*2 +9].x = recx + recp;
     dots[1804+numberOfLines*2 +9].y = 0;
-    dots[1804+numberOfLines*2 +9].z = -recz+camz;
+    dots[1804+numberOfLines*2 +9].z = -recz;
 
-    dots[1804+numberOfLines*2 +10].x = recx-camx + recp;
+    dots[1804+numberOfLines*2 +10].x = recx + recp;
     dots[1804+numberOfLines*2 +10].y = 0;
-    dots[1804+numberOfLines*2 +10].z = -recz+camz - rect;
+    dots[1804+numberOfLines*2 +10].z = -recz - rect;
 
-    dots[1804+numberOfLines*2 +11].x = recx-camx;
+    dots[1804+numberOfLines*2 +11].x = recx;
     dots[1804+numberOfLines*2 +11].y = 0;
-    dots[1804+numberOfLines*2 +11].z = -recz+camz - rect;
+    dots[1804+numberOfLines*2 +11].z = -recz - rect;
 
 }
 
 void MyGLWidget::makeThePLK(){
-    dots[1816+numberOfLines*2].x = xx + (float)(p-pw)/2 -camx;
+    dots[1816+numberOfLines*2].x = xx + (float)(p-pw)/2;
     dots[1816+numberOfLines*2].y = pe;
-    dots[1816+numberOfLines*2].z = -zz +camz;
+    dots[1816+numberOfLines*2].z = -zz;
 
-    dots[1816+numberOfLines*2+1].x = xx + (float)(p-pw)/2 + pw-camx;
+    dots[1816+numberOfLines*2+1].x = xx + (float)(p-pw)/2 + pw;
     dots[1816+numberOfLines*2+1].y = pe;
-    dots[1816+numberOfLines*2+1].z = -zz +camz;
+    dots[1816+numberOfLines*2+1].z = -zz;
 
-    dots[1816+numberOfLines*2+2].x = xx + (float)(p-pw)/2 + pw-camx;
+    dots[1816+numberOfLines*2+2].x = xx + (float)(p-pw)/2 + pw;
     dots[1816+numberOfLines*2+2].y = pe+ph;
-    dots[1816+numberOfLines*2+2].z = -zz+camz;
+    dots[1816+numberOfLines*2+2].z = -zz;
 
-    dots[1816+numberOfLines*2+3].x = xx + (float)(p-pw)/2 -camx;
+    dots[1816+numberOfLines*2+3].x = xx + (float)(p-pw)/2;
     dots[1816+numberOfLines*2+3].y = pe+ph;
-    dots[1816+numberOfLines*2+3].z = -zz+camz;
+    dots[1816+numberOfLines*2+3].z = -zz;
 
-    NMx = xx + (float)(p-pw)/2 -camx;
+    NMx = xx + (float)(p-pw)/2;
     NMy = pe+ph;
-    NMz = -zz+camz;
+    NMz = -zz;
 }
 
 void MyGLWidget::makeTheContours(){
     QString fileaddr;
 
-    fileaddr = QFileDialog::getOpenFileName(this, tr("Contours"), "", tr("Text Files (*.txt)"));
+    fileaddr = QCoreApplication::applicationDirPath() + "/Files/plate_contour_mm.txt";//QFileDialog::getOpenFileName(this, tr("Contours"), "", tr("Text Files (*.txt)"));
     QFile file(fileaddr);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
         return;
-
+    }
     QTextStream in(&file);
     QString word;
     int maxI = 0;
@@ -652,6 +659,7 @@ void MyGLWidget::makeTheContours(){
             sum+= contourSizes[i];
         }
     contourAllSize = sum;
+    file.close();
 }
 
 void MyGLWidget::makeConDOTS(){
@@ -666,17 +674,25 @@ void MyGLWidget::makeConDOTS(){
         sum+= contourSizes[i];
     }
 }
-<<<<<<< HEAD
 
 void MyGLWidget::triangulation()
 {
     int sum =0;
     vector <DOT*> temp;
     glColor3f(0.0f,0.0f,0.0f);
-    glBegin(GL_TRIANGLES);
+    if ((abss((imdots[1816+numberOfLines*2+0].x/w)*2)>1 || abss((imdots[1816+numberOfLines*2+0].y/h)*2)>1)
+            && (abss((imdots[1816+numberOfLines*2+1].x/w)*2)>1 || abss((imdots[1816+numberOfLines*2+1].y/h)*2)>1)
+            && (abss((imdots[1816+numberOfLines*2+2].x/w)*2)>1 || abss((imdots[1816+numberOfLines*2+2].y/h)*2)>1)
+            && (abss((imdots[1816+numberOfLines*2+3].x/w)*2)>1 || abss((imdots[1816+numberOfLines*2+3].y/h)*2)>1)    )
+    {
+        return;
+    }
+
+
+
     for(int i=0; i<conObjSize; i++)
     {
-
+    glBegin(GL_TRIANGLES);
 //        glBegin(GL_LINES);
 //        glVertex3f(-(imdots[1820+numberOfLines*2+sum].x/w)*2, -(imdots[1820+numberOfLines*2+sum].y/h)*2, 0);
 //        glVertex3f(-(imdots[1820+numberOfLines*2+sum+contourSizes[i] -1].x/w)*2, -(imdots[1820+numberOfLines*2+sum+contourSizes[i] -1].y/h)*2, 0);
@@ -693,10 +709,21 @@ void MyGLWidget::triangulation()
             t->z = 0;
             temp.push_back(t);
             temp1.push_back(t);
+//            if (t->x >100000 || t->y >100000 || t->x <-100000 || t->y <-100000)
+//            {
+//                temp1.clear();
+//                temp.clear();
+//                glEnd();
+//                return;
+//            }
         }
 
+        int counter = 0;
         while (temp.size() > 2 )
         {
+            counter ++;
+            if (counter>150)
+                break;
             int j=0;
 //            if (closeVertices(temp[temp.size()-1],temp[0],temp[1]))
 //            {
@@ -754,8 +781,9 @@ void MyGLWidget::triangulation()
         temp1.clear();
 
         sum+= contourSizes[i];
+        glEnd();
     }
-    glEnd();
+
 }
 
 bool MyGLWidget::convex(double x1, double y1, double x2, double y2,
@@ -827,10 +855,94 @@ bool MyGLWidget::PointsInTriangles (int ptIndex, vector <DOT*> * points)
 
 bool MyGLWidget::closeVertices(DOT* a, DOT* b, DOT* c){
     if ((abss(a->x - b->x) <= 0.01 && abss(a->y - b->y) <= 0.01)||(abss(c->x - b->x) <= 0.01 && abss(c->y - b->y) <= 0.01))
-{
-       return 1;
-}
+        {
+            return 1;
+        }
     return 0;
 }
-=======
->>>>>>> origin/master
+
+
+void MyGLWidget::mousePressEvent(QMouseEvent *event){
+    mw->ui->activeWin->setText(QString::number(number+1));
+    mw->glwidget = this;
+
+    mw->ui->imxx->setText(QString::number(w));
+    mw->ui->imyy->setText(QString::number(h));
+
+    mw->ui->F->setValue(F);
+    mw->ui->Sx->setValue(sx);
+    mw->ui->Sy->setValue(sy);
+    mw->ui->cx->setValue(cx);
+    mw->ui->cy->setValue(cy);
+    mw->ui->x->setValue(rotX);
+    mw->ui->y->setValue(rotY);
+    mw->ui->z->setValue(rotZ);
+
+    mw->ui->xm->setValue(camx);
+    mw->ui->ym->setValue(camy);
+    mw->ui->zm->setValue(camz);
+
+
+    mw->ui->recp->setValue(recp);
+    mw->ui->rect->setValue(rect);
+    mw->ui->recx->setValue(recx);
+    mw->ui->recz->setValue(recz);
+
+    mw->ui->lineEdit_3->setText(QString::number(xx));
+    mw->ui->lineEdit_4->setText(QString::number(zz));
+    mw->ui->lineEdit_5->setText(QString::number(t));
+    mw->ui->lineEdit_6->setText(QString::number(p));
+    mw->ui->lineEdit_7->setText(QString::number(e));
+
+    //mw->on_pushButton_clicked();
+}
+
+void MyGLWidget::mouseDoubleClickEvent(QMouseEvent *event){
+    mw->ui->activeWin->setText(QString::number(number+1));
+    doubleClicked();
+}
+
+void MyGLWidget::doubleClicked(){
+    mw->glwidget = this;
+    if(MinMaxFlag == 0){
+        for(int i=0; i<mw->numOfCameras; i++){
+            //mw->ui->sina->removeWidget(mw->widgets[i]);
+            mw->widgets[i]->hide();
+        }
+        //mw->ui->sina->addWidget(this);
+        ww = mw->layoutSizeX;
+        hh = mw->layoutSizeY;
+        MinMaxFlag = 1;
+        move(QPoint( 15+ mw->ui->tabWidget->width() , 40) );
+        this->show();
+        this->resizeaa(h, w);
+        QSize a(currentW,currentH);
+        resize(a);
+    }
+    else
+    {
+        //mw->ui->sina->removeWidget(this);
+        ww = mw->layoutSizeX/mw->gridCols;
+        hh = mw->layoutSizeY/mw->gridRows;
+
+        move(QPoint( 15+mw->ui->tabWidget->width() +(number%mw->gridCols)*(ww+1), 40+(number/mw->gridCols)*(hh+1)) );
+
+        for(int i=0; i<mw->numOfCameras; i++){
+            //mw->ui->sina->addWidget(mw->widgets[i], (int)i/mw->gridCols, (int)i%mw->gridCols);
+            //mw->widgets[i]->ww = mw->layoutSizeX/mw->gridCols;
+            //mw->widgets[i]->hh = mw->layoutSizeY/mw->gridRows;
+            mw->widgets[i]->show();
+            //mw->widgets[i]->resizeaa(mw->widgets[i]->h,mw->widgets[i]->w);
+            mw->widgets[i]->resizeaa(mw->widgets[i]->h,mw->widgets[i]->w);
+            QSize a(mw->widgets[i]->currentW,mw->widgets[i]->currentH);
+            mw->widgets[i]->resize(a);
+            mw->glwidget = mw->widgets[i];
+
+
+            mw->glwidget->updateGL();
+        }
+        mw->glwidget = this;
+        MinMaxFlag = 0;
+
+    }
+}

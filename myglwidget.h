@@ -1,15 +1,12 @@
 #ifndef MYGLWIDGET_H
 #define MYGLWIDGET_H
-
 #include <QtOpenGL/QtOpenGL>
 #include <GL/glu.h>
-<<<<<<< HEAD
 #include <vector>
+
+class MainWindow;
+
 using namespace std;
-=======
-
-
->>>>>>> origin/master
 
 struct DOT{
     GLfloat x,y,z;
@@ -23,8 +20,9 @@ class MyGLWidget : public QGLWidget
 {
     Q_OBJECT
 public:
+    MainWindow *mw;
      explicit MyGLWidget(QWidget *parent = 0);
-    MyGLWidget(int nl, GLfloat rw, GLfloat x1, GLfloat x2, GLfloat x3, GLfloat x4 , GLfloat x5);
+    MyGLWidget(int nl, GLfloat rw, GLfloat x1, GLfloat x2, GLfloat x3, GLfloat x4 , GLfloat x5, GLfloat roadX, GLfloat roadY);
     void Distortion();
      void Intrinsics();
      void clear();
@@ -35,7 +33,6 @@ public:
      void makeThePLK();
      void makeTheContours();
      void makeConDOTS();
-<<<<<<< HEAD
      void resizeaa(int height, int width);
      void triangulation();
      bool convex(double x1, double y1, double x2, double y2,
@@ -46,11 +43,9 @@ public:
      bool PointsInTriangles (int ptIndex, vector <DOT*> * points);
      bool closeVertices(DOT* a, DOT* b, DOT* c);
      vector <DOT*> temp1;
-=======
-     void resizeaa(int h, int w);
->>>>>>> origin/master
 
 
+     int number;
      QVector3D xAxis, yAxis, zAxis;
      DOT* dots;
      DOT* dots0;
@@ -64,7 +59,7 @@ public:
      GLfloat F,sx,sy,cx,cy;
      GLfloat k1,k2,k3,p1,p2;
      GLfloat rotX,rotY,rotZ;
-     GLfloat recx,recz,rect,recp;
+     GLfloat recx,recz,rect,recp, roadX, roadY;
      GLfloat pe,pw,ph;
      GLfloat NMx, NMy, NMz;//plkcoor
      CNT **contours;
@@ -72,7 +67,16 @@ public:
      int *contourSizes;
      int conObjSize;
      int contourAllSize;
+     bool MinMaxFlag;
+
      //DOT plkcoor;
+
+
+public slots:
+     void mousePressEvent(QMouseEvent * event);
+     void mouseDoubleClickEvent( QMouseEvent * event );
+     void doubleClicked();
+
 protected:
 
      void initializeGL();
